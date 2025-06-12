@@ -1,26 +1,22 @@
 import numpy as np
 import copy
 
-from utils.activations import Activations
+from src.activations.functions import Activations
+from src.loss.functions import LossFuncs
 
 class FullyConnectedNet():
    
-    def __init__(self, n_layers, n_hidden):
+    def __init__(self, n_layers, n_hidden, n_input, n_output):
 
         self.n_layers = n_layers
         self.n_hidden = n_hidden
-        
+        self.n_output = n_output
+        self.n_input = n_input
+
         self.weights = {}
         self.biases = {}
-        self.Z = {}
-        self.A = {}
 
-
-    def init_net(self, X):
-
-        n_input = X.shape[0] 
-        n_output = 10
-        layer_sizes = [n_input] + [self.n_hidden] * self.n_layers + [n_output]
+        layer_sizes = [n_input] + [self.n_hidden] * self.n_layers + [self.n_output]
 
         for i in range(len(layer_sizes) - 1):
 
@@ -29,6 +25,9 @@ class FullyConnectedNet():
 
             self.weights[f'W{i+1}'] = np.random.randn(out_size, in_size)
             self.biases[f'b{i+1}'] = np.zeros((out_size, 1))
+
+        self.Z = {}
+        self.A = {}
 
 
     def forward_pass(self, X):
@@ -58,17 +57,33 @@ class FullyConnectedNet():
     def get_parameters(self):
         return copy.deepcopy(self.weights), copy.deepcopy(self.biases), copy.deepcopy(self.Z), copy.deepcopy(self.A)
 
-    def train_net(self):
+    def train_net(self, X):
+
+        self.init_net(X)
+
+        #forward_pass()
+
+
+
         pass
 
     def back_prop():
         pass
 
 
+
+
+
+
+
+
 if __name__ == "__main__":
     
     X = np.array([[0.24], [0.31]])
-    net = FullyConnectedNet(n_layers=3, n_hidden=3)
-    net.init_net(X)
+    y = np.array([[0],[0],[1],[0],[0],[0],[0],[0],[0],[0]])
+    net = FullyConnectedNet(n_layers=3, n_hidden=3, n_input=2, n_output=10)
     net.forward_pass(X)
     params = net.get_parameters()
+    y_hat = params[-1]['A4']
+    loss = LossFuncs.categorical_cross_entropy(y_hat, y)
+    print(loss)
