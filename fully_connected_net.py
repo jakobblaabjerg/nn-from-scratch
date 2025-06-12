@@ -29,6 +29,12 @@ class FullyConnectedNet():
         self.Z = {}
         self.A = {}
 
+        # derivatives
+        self.dZ = {}
+        self.dA = {}
+        self.dW = {}
+        self.db = {}
+
 
     def forward_pass(self, X):
 
@@ -57,6 +63,10 @@ class FullyConnectedNet():
     def get_parameters(self):
         return copy.deepcopy(self.weights), copy.deepcopy(self.biases), copy.deepcopy(self.Z), copy.deepcopy(self.A)
 
+
+
+
+
     def train_net(self, X):
 
         self.init_net(X)
@@ -67,7 +77,20 @@ class FullyConnectedNet():
 
         pass
 
-    def back_prop():
+    def back_prop(self, y):
+
+        dz4 = A4-y
+        dw4 = dz4*A3
+        db4 = 1*dz4
+        da3 = w4*dz4
+        dz3 = da3* (z3>0)
+
+
+
+
+
+
+
         pass
 
 
